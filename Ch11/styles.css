@@ -1,0 +1,10 @@
+.flying-div
+{
+    background-color: red;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    line-height: 40px; /* trick for vertically centering the text */
+    color: white;
+    text-align: center;
+}
