@@ -1,7 +1,6 @@
-The technique shown in this demo is used for emulating "transitionend" event on any environment in Bootstrap4 Util.js file code. Basically we bind "transitionend" handlers to elements but have the ability to handle our custom "bsTransitionEnd" whenever the native event is handled. If the environment does not support "transitionend", given that we call emulateTransitionEnd(duration) collection plugin function for the element on setup phase, the handler attached by the end user will be called even if the native event haven't been dispatched.
+Basically we bind "transitionend" handlers to elements but have the ability to handle our custom "bsTransitionEnd" whenever the native event is handled. Bootstrap 4 JavaScript uses this technique to make sure its CSS-transition-based animations work on any platform.<sup>1</sup>
 
 Also, jQuery uses this technique to substitute mouseover / mouseout events with mouseenter / mouseleave ones.
 
-----------------
-
-jquery.js included for this demo is a custom build of jQuery 3.4.1-pre with most of the modules but css, effects, and event cut off.
+-------
+<sup>1</sup> In Bootstrap 4 (see \_proto.\_activate() method from tab.js) once the CSS transition has ended, callback must be called (complete() in the case of tab.js). Under some circumstances (Safari on iPad, Firefox through remote desktop) the browser does not detect "transitionend". Therefore there is a "safety belt" in Bootstrap 4 in the form of "bsTransitionEnd" special event bound to the native "transitionend". The second callback is attached to any element that has "transition" CSS property by calling $.fn.emulateTransitionEnd(duration) on that element. That callback checks that it fires within a duration value passed to emulateTransitionEnd() as a parameter. If it didn't fire, "bsTransitionEnd" is triggered explicitly on the element to make the "complete" callback (which is the first, original callback for "transitionend") fire.
